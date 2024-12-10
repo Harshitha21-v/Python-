@@ -1,0 +1,55 @@
++*In[3]:*+
+[source, ipython3]
+----
+class Complex:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+
+    def add(self, other):
+        real_part = self.real + other.real
+        imag_part = self.imag + other.imag
+        return Complex(real_part, imag_part)
+
+    def sub(self, other):
+        real_part = self.real - other.real
+        imag_part = self.imag - other.imag
+        return Complex(real_part, imag_part)
+
+    def mul(self, other):
+        real_part = (self.real * other.real) - (self.imag * other.imag)
+        imag_part = (self.real * other.imag) + (self.imag * other.real)
+        return Complex(real_part, imag_part)
+
+    def __str__(self):
+        return f"{self.real}+{self.imag}i"
+
+if __name__ == "__main__":
+    c1 = Complex(2, 3)
+    c2 = Complex(1, 4)
+
+    result_add = c1.add(c2)
+    print(f"Addition: {result_add}")
+
+    result_sub = c1.sub(c2)
+    print(f"Subtraction: {result_sub}")
+
+    result_mul = c1.mul(c2)
+    print(f"Multiplication: {result_mul}")
+
+----
+
+
++*Out[3]:*+
+----
+Addition: 3+7i
+Subtraction: 1+-1i
+Multiplication: -10+11i
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
