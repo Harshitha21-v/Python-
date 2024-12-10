@@ -1,0 +1,43 @@
++*In[1]:*+
+[source, ipython3]
+----
+def create_dictionary(words):
+    word_dict = {}
+
+    for word in words:
+        first_char = word[0].lower()  # Get the first character in lowercase
+
+        # If the first character is not in the dictionary, add it
+        if first_char not in word_dict:
+            word_dict[first_char] = []
+
+        # Append the word to the list of the corresponding first character
+        word_dict[first_char].append(word)
+
+    return word_dict
+
+# Example usage
+words = input("Enter words separated by spaces: ").split()
+result_dict = create_dictionary(words)
+
+print("Dictionary with first characters as keys:")
+for key, value in result_dict.items():
+    print(f"{key}: {value}")
+----
+
+
++*Out[1]:*+
+----
+Enter words separated by spaces: hello nhce blr
+Dictionary with first characters as keys:
+h: ['hello']
+n: ['nhce']
+b: ['blr']
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
