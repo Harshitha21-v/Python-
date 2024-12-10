@@ -1,0 +1,43 @@
++*In[1]:*+
+[source, ipython3]
+----
+class A:
+    def show(self):
+        print("Method from Class A")
+
+class B(A):
+    def show(self):
+        print("Method from Class B")
+
+class C(A):
+    def show(self):
+        print("Method from Class C")
+
+class D(B, C):
+    pass
+
+# Creating an object of class D
+d = D()
+
+# Calling the show() method on the object d
+d.show()
+
+# Displaying the Method Resolution Order (MRO)
+print("Method Resolution Order (MRO):")
+print(D.mro())
+----
+
+
++*Out[1]:*+
+----
+Method from Class B
+Method Resolution Order (MRO):
+[<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>]
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
