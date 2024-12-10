@@ -1,0 +1,48 @@
++*In[2]:*+
+[source, ipython3]
+----
+class ListManager:
+    def __init__(self):
+        self.elements = []
+
+    def append_element(self, element):
+        self.elements.append(element)
+        print(f"Element '{element}' added successfully.")
+
+    def delete_element(self, element):
+        if element in self.elements:
+            self.elements.remove(element)
+            print(f"Element '{element}' removed successfully.")
+        else:
+            print(f"Element '{element}' not found in the list.")
+
+    def display_elements(self):
+        if self.elements:
+            print("List elements:", self.elements)
+        else:
+            print("The list is empty.")
+
+if __name__ == "__main__":
+    list_manager = ListManager()
+    list_manager.append_element(10)
+    list_manager.append_element(20)
+    list_manager.append_element(30)
+    list_manager.display_elements()
+
+----
+
+
++*Out[2]:*+
+----
+Element '10' added successfully.
+Element '20' added successfully.
+Element '30' added successfully.
+List elements: [10, 20, 30]
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
