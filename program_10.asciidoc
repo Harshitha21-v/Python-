@@ -1,0 +1,62 @@
++*In[4]:*+
+[source, ipython3]
+----
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Dataset
+data = {
+    'Age': [25, 30, 35, 40, 45, 50, 55, 60, 65, 70],
+    'Salary': [5000, 2500, 2000, 3000, 3500, 4000, 4500, 5000, 6000, 6700],
+    'Department': ['HR', 'IT', 'Finance', 'IT', 'Finance', 'HR', 'HR', 'Finance', 'IT', 'Finance']
+}
+
+# Creating DataFrame
+df = pd.DataFrame(data)
+
+# Scatter plot: Age vs. Salary
+plt.figure(figsize=(8, 5))
+plt.scatter(df['Age'], df['Salary'], color='blue', marker='o')
+plt.title("Scatter Plot of Age vs. Salary")
+plt.xlabel("Age")
+plt.ylabel("Salary")
+plt.grid(True)
+plt.show()
+
+# Histogram of Age Distribution
+plt.figure(figsize=(8, 5))
+plt.hist(df['Age'], bins=5, color='green', edgecolor='black')
+plt.title("Histogram of Age Distribution")
+plt.xlabel("Age")
+plt.ylabel("Frequency")
+plt.grid(axis='y')
+plt.show()
+
+# Bar plot of department counts
+plt.figure(figsize=(8, 5))
+department_count = df['Department'].value_counts()
+plt.bar(department_count.index, department_count.values, color='orange', edgecolor='black')
+plt.title("Bar Plot of Department Counts")
+plt.xlabel("Department")
+plt.ylabel("Number of Employees")
+plt.grid(axis='y')
+plt.show()
+
+----
+
+
++*Out[4]:*+
+----
+![png](output_0_0.png)
+
+![png](output_0_1.png)
+
+![png](output_0_2.png)
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
