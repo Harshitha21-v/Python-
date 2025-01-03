@@ -1,0 +1,158 @@
++*In[2]:*+
+[source, ipython3]
+----
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from mpl_toolkits.mplot3d import Axes3D
+
+# Step 1: Data Loading and Preprocessing
+# Replace 'your_dataset.csv' with the path to your dataset
+data_path = 'your_dataset.csv'
+data = pd.read_csv(data_path)
+
+# Handling missing values
+data.dropna(inplace=True)
+
+# Adding calculated fields
+data['Total Immigrants'] = data.groupby('Country of Origin')['Number of Immigrants'].transform('sum')
+
+# Step 2: Data Exploration and Analysis
+# Yearly immigration trends
+yearly_trends = data.groupby('Year')['Number of Immigrants'].sum()
+
+# Top 10 source and destination countries
+top_sources = data.groupby('Country of Origin')['Number of Immigrants'].sum().nlargest(10)
+top_destinations = data.groupby('Destination Country')['Number of Immigrants'].sum().nlargest(10)
+
+# Gender distribution analysis
+gender_distribution = None
+if 'Gender' in data.columns:
+    gender_distribution = data.groupby('Gender')['Number of Immigrants'].sum()
+
+# Step 3: Visualization
+sns.set(style="whitegrid")
+
+# Trends over time
+plt.figure(figsize=(12, 6))
+plt.plot(yearly_trends.index, yearly_trends.values, marker='o', linestyle='-', color='b')
+plt.title('Global Immigration Trends Over Time')
+plt.xlabel('Year')
+plt.ylabel('Number of Immigrants')
+plt.grid(True)
+plt.show()
+
+# Top 10 source countries
+plt.figure(figsize=(10, 6))
+sns.barplot(x=top_sources.values, y=top_sources.index, palette='viridis')
+plt.title('Top 10 Source Countries of Immigrants')
+plt.xlabel('Number of Immigrants')
+plt.ylabel('Country')
+plt.show()
+
+# Top 10 destination countries
+plt.figure(figsize=(10, 6))
+sns.barplot(x=top_destinations.values, y=top_destinations.index, palette='coolwarm')
+plt.title('Top 10 Destination Countries for Immigrants')
+plt.xlabel('Number of Immigrants')
+plt.ylabel('Country')
+plt.show()
+
+# 3D Visualization: Regional comparisons
+if 'Region' in data.columns:
+    region_data = data.groupby(['Region', 'Year'])['Number of Immigrants'].sum().reset_index()
+
+    # Map regions to numeric values
+    region_mapping = {region: idx for idx, region in enumerate(region_data['Region'].unique())}
+    region_data['Region_Numeric'] = region_data['Region'].map(region_mapping)
+
+    # Create 3D plot with numeric region axis
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    ax.scatter(region_data['Year'], region_data['Region_Numeric'], region_data['Number of Immigrants'],
+               c=region_data['Number of Immigrants'], cmap='viridis', s=50)
+    ax.set_title('3D Visualization of Regional Immigration Trends')
+    ax.set_xlabel('Year')
+    ax.set_ylabel('Region')
+    ax.set_zlabel('Number of Immigrants')
+
+    # Customize region axis with original labels
+    ax.set_yticks(list(region_mapping.values()))
+    ax.set_yticklabels(list(region_mapping.keys()))
+
+    plt.show()
+
+# Step 4: Statistical Analysis
+mean_immigrants = np.mean(data['Number of Immigrants'])
+median_immigrants = np.median(data['Number of Immigrants'])
+std_dev_immigrants = np.std(data['Number of Immigrants'])
+
+# Compute correlation matrix only for numeric columns
+numeric_columns = data.select_dtypes(include=[np.number])  # Select only numeric columns
+correlation_matrix = numeric_columns.corr()  # Compute correlation matrix
+
+# Display the correlation matrix
+if correlation_matrix is not None:
+    print("\nCorrelation Matrix:")
+    print(correlation_matrix)
+
+# Step 5: Insights and Conclusion
+print("\nKey Findings:")
+print(f"1. Mean number of immigrants: {mean_immigrants}")
+print(f"2. Median number of immigrants: {median_immigrants}")
+print(f"3. Standard deviation of immigrants: {std_dev_immigrants}")
+
+if gender_distribution is not None:
+    print("\nGender Distribution:")
+    print(gender_distribution)
+
+# Additional insights and complex visualizations can be added as needed.
+
+
+----
+
+
++*Out[2]:*+
+----
+![png](output_0_0.png)
+
+![png](output_0_1.png)
+
+![png](output_0_2.png)
+
+![png](output_0_3.png)
+
+
+Correlation Matrix:
+                              Year  Number of Immigrants  Total Immigrants
+Year                  1.000000e+00              0.123394      1.559651e-14
+Number of Immigrants  1.233941e-01              1.000000      1.563841e-01
+Total Immigrants      1.559651e-14              0.156384      1.000000e+00
+
+Key Findings:
+1. Mean number of immigrants: 2564.704347826087
+2. Median number of immigrants: 2660.0
+3. Standard deviation of immigrants: 1343.4690266743298
+
+Gender Distribution:
+Gender
+Female    288400
+Male      301482
+Name: Number of Immigrants, dtype: int64
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
